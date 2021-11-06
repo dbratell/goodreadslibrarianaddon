@@ -120,14 +120,17 @@ function checkIsbn10() {
 
 function onTitleEdited() {
     if (sort_title_field && title_field.value) {
+        const auto_sort_title = title_field.value.toLowerCase();
         if (sort_title_field.classList.contains("autochanged") ||
             !sort_title_field.value ||
-            title_field.value.toLowerCase().startsWith(sort_title_field.value)) {
+            auto_sort_title.startsWith(sort_title_field.value)) {
             // Current sort_title_field has no advanced content so we
-            // can insert something generated.
-            sort_title_field.value = title_field.value.toLowerCase();
-            sort_title_field.classList.add("autochanged");
-            sort_title_field.title = "LibTool: Derived from title field";
+            // can insert something generated, if that would help.
+            if (sort_title_field.value != auto_sort_title) {
+                sort_title_field.value = title_field.value.toLowerCase();
+                sort_title_field.classList.add("autochanged");
+                sort_title_field.title = "LibTool: Derived from title field";
+            }
         }
     }
 }

@@ -9,6 +9,8 @@ ability to fix the actual site.
 Features
 ===
 
+* Autogenerates "Sort by" from title
+
 * Highlights most recent book in the combination list
 
 * Warns about mismatch between ISBN10 ISBN13
@@ -16,8 +18,6 @@ Features
 * Warns for invalid ISBNs
 
 * Autogenerates ISBN13 from ISBN10
-
-* Autogenerates "Sort by" from title
 
 * Auto-enable "keyword" when writing text in the combine search field
 
