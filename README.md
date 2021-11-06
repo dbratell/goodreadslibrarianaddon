@@ -9,6 +9,9 @@ ability to fix the actual site.
 Features
 ===
 
+* Lets you write a comma separated list of authors and have them expanded
+  into author fields.
+
 * Autogenerates "Sort by" from title
 
 * Highlights most recent book in the combination list

@@ -8,6 +8,8 @@ const sort_title_field = document.getElementById("book_sort_by_title");
 
 const language_select = document.querySelector("select#book_language_code");
 
+const add_new_author_link = document.querySelector("a#addNewAuthor");
+
 function calculateIsbn10CheckDigit(isbn10) {
     let check_sum = 0;
     for (let i = 0; i < 9; i++) {
@@ -142,6 +144,165 @@ function onSortTitleEdited() {
     sort_title_field.title = "";
 }
 
+function collectAuthor(name_id, role_id) {
+    const name_field = document.querySelector("input#"+name_id);
+    if (!name_field)
+        return null;
+    const role_field = document.querySelector("input#"+role_id);
+    const name = name_field.value;
+    const role = role_field ? role_field.value : "";
+    return [name, role];
+}
+
+function setAuthor(name_id, role_id, name_role) {
+    let old_name_role = collectAuthor(name_id, role_id);
+    if (old_name_role === null) {
+        add_new_author_link.click();
+        old_name_role = collectAuthor(name_id, role_id);
+        if (old_name_role == null) {
+            // Give up, something is wrong.
+            console.log("Libtool failed to add author field for " + name_id + " and " + role_id + ".");
+            return;
+        }
+    }
+
+    if (name_role[0] === old_name_role[0] && name_role[1] === old_name_role[1]) {
+        // Already set
+        return;
+    }
+
+    const name_field = document.querySelector("input#"+name_id);
+    name_field.value = name_role[0];
+    name_field.classList.add("updated");
+    const role_field = document.querySelector("input#"+role_id);
+    if (role_field) {
+        if (role_field.value != name_role[1]) {
+            role_field.value = name_role[1];
+            role_field.classList.add("updated");
+        }
+    }
+    // Maybe we need to press the save button too...
+    if (name_id.startsWith("authorName_")) {
+        const possible_author_number = name_id.split("_")[1];
+        const possible_save_button_id = "saveBookAuthor_" + possible_author_number;
+        const possible_save_button = document.getElementById(possible_save_button_id);
+        if (possible_save_button && possible_save_button.innerText == "save") {
+            possible_save_button.click();
+        }
+    }
+}
+
+function expandAuthorCommas() {
+    const collectedAuthors = [];
+    const collectedAuthorsCheck = {}
+    let phase = 0;
+    let i = 0;
+    let prevTr = null;
+    // First the default author, then previous authors, then extra 1, 2, 3...
+    // authors
+    const existing_fields = []; // The non-numbered fields
+    while (true) {
+        let name_role = null;
+        if (phase == 0) {
+            name_role = collectAuthor("author_name", "book_author_role");
+            existing_fields.push(["author_name", "book_author_role"])
+            prevTr = document.getElementById("author_name").parentNode.parentNode;
+            phase++;
+        } else if (phase == 1) {
+            prevTr = prevTr.nextSibling;
+            while (prevTr &&
+                   !(prevTr.id && prevTr.id.startsWith("bookAuthor_"))) {
+                prevTr = prevTr.nextSibling;
+            }
+            if (prevTr) {
+                const author_number = prevTr.id.substring(
+                    "bookAuthor_".length,
+                    prevTr.id.length);
+                const author_show = document.getElementById(
+                    "bookAuthorShow_" + author_number);
+                if (author_show) {
+                    if (author_show.style.display != "none") {
+                        // Not in edit mode, yet...
+                        const links = author_show.getElementsByTagName("a");
+                        const edit_link = links[1];
+                        if (edit_link.innerText == "edit") {
+                            edit_link.click();
+                        }
+                    }
+                    name_role = collectAuthor("authorName_" + author_number,
+                                              "role_" + author_number);
+                    existing_fields.push(["authorName_" + author_number,
+                                          "role_" + author_number]);
+
+                }
+            }
+            if (name_role === null) {
+                phase = 2;
+                i = 1;
+                continue;
+            }
+        } else {
+            name_role = collectAuthor("book_authors_book_author" + i + "_name",
+                                      "book_authors_book_author" + i + "_role");
+            if (name_role === null)
+                break;
+            i += 1;
+        }
+
+        if (name_role[0] && !(("" + name_role) in collectedAuthorsCheck)) {
+            collectedAuthorsCheck["" + name_role] = "seen";
+            collectedAuthors.push(name_role);
+        }
+    }
+
+    const expanded_author_roles = [];
+    for (let name_role of collectedAuthors) {
+        const name_with_commas = name_role[0];
+        const role = name_role[1];
+        const names = name_with_commas.split(",");
+        for (let name of names) {
+            if (name.trim()) {
+                expanded_author_roles.push([name.trim(), role]);
+            }
+        }
+    }
+
+    // Fill fields with the expanded data
+    // First existing_fields fields, then numbered fields
+    for (let i = 0; i < expanded_author_roles.length; i++) {
+        const name_role = expanded_author_roles[i];
+        if (i < existing_fields.length) {
+            setAuthor(existing_fields[i][0], existing_fields[i][1], name_role);
+        } else {
+            setAuthor("book_authors_book_author" + i + "_name",
+                      "book_authors_book_author" + i + "_role",
+                      name_role);
+        }
+    }
+
+    // Clear unused fields
+    if (expanded_author_roles.length < existing_fields.length) {
+        for (let i = existing_fields.length - expanded_author_roles.length;
+             i < existing_fields.length;
+             i++) {
+            setAuthor(existing_fields[i][0], existing_fields[i][1], ["", ""]);
+        }
+    }
+    // Clear unused numbered fields
+    let next_unused_number = expanded_author_roles.length;
+    if (next_unused_number < 1)
+        next_unused_number = 1;
+    while (true) {
+        if (document.getElementById("book_authors_book_author" + next_unused_number + "_name")) {
+            setAuthor("book_authors_book_author" + next_unused_number + "_name",
+                      "book_authors_book_author" + i + "_role", ["", ""]);
+            next_unused_number++;
+        } else {
+            break;
+        }
+    }
+}
+
 function addRecentLanguage(select, language_code, insert_before) {
     // Find the current option so we can use the same label.
     const current_option = document.querySelector(
@@ -226,4 +387,14 @@ if (language_select) {
     addRecentLanguagesToTop();
     language_select.addEventListener("change", onLanguageChanging);
     language_select.addEventListener("blur", onLanguageChangeFinished);
+}
+
+if (add_new_author_link) {
+    const container = add_new_author_link.parentNode;
+    container.appendChild(document.createTextNode(" - "));
+    const new_command = document.createElement("a");
+    new_command.href = "#";
+    new_command.innerText = "Expand commas (LibTool)";
+    container.appendChild(new_command);
+    new_command.addEventListener("click", expandAuthorCommas);
 }
