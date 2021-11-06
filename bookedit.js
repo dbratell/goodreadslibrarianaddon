@@ -6,6 +6,8 @@ const isbn13_field = document.getElementById("book_isbn13");
 const title_field = document.getElementById("book_title");
 const sort_title_field = document.getElementById("book_sort_by_title");
 
+const language_select = document.querySelector("select#book_language_code");
+
 function calculateIsbn10CheckDigit(isbn10) {
     let check_sum = 0;
     for (let i = 0; i < 9; i++) {
