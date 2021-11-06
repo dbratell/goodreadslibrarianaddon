@@ -1,0 +1,11 @@
+input.invalidisbn {
+    color: red !important;
+}
+
+input.updated {
+    color: green !important;
+}
+
+input.autochanged {
+    color: green !important;
+}

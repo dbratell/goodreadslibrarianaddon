@@ -1,0 +1,27 @@
+{
+    "name": "Goodreads Librarian Tools",
+    "description": "Simplifying and optimizing typical librarian actions on Goodreads.",
+    "version": "0.1",
+    "manifest_version": 3,
+    "icons": {
+        "16": "/icon16.png",
+        "32": "/icon32.png",
+        "48": "/icon48.png",
+        "128": "/icon128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://www.goodreads.com/book/edit/*",
+                        "https://www.goodreads.com/book/new*"],
+            "css": ["bookedit.css"],
+            "js": ["bookedit.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["https://www.goodreads.com/book/combine/*"],
+            "css": ["combine.css"],
+            "js": ["combine.js"],
+            "run_at": "document_idle"
+        }
+    ]
+}

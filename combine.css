@@ -1,0 +1,5 @@
+label.autochanged { color: green; }
+
+div.recently-visited-book { color: green; font-weight: bold;}
+
+div.recently-visited-book::before { content: "→ "; }
