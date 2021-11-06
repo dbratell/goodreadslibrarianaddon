@@ -18,6 +18,12 @@
             "run_at": "document_idle"
         },
         {
+            "matches": ["https://www.goodreads.com/author/edit/*"],
+            "css": ["authoredit.css"],
+            "js": ["authoredit.js"],
+            "run_at": "document_idle"
+        },
+        {
             "matches": ["https://www.goodreads.com/book/combine/*"],
             "css": ["combine.css"],
             "js": ["combine.js"],
