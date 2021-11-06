@@ -20,3 +20,5 @@ Features
 * Autogenerates "Sort by" from title
 
 * Auto-enable "keyword" when writing text in the combine search field
+
+* Puts the three most recently used languages at the top of the language select.

@@ -12,7 +12,17 @@
     "content_scripts": [
         {
             "matches": ["https://www.goodreads.com/book/edit/*",
-                        "https://www.goodreads.com/book/new*"],
+                        "https://www.goodreads.com/book/new*",
+                        "https://www.goodreads.com/book/1*",
+                        "https://www.goodreads.com/book/2*",
+                        "https://www.goodreads.com/book/3*",
+                        "https://www.goodreads.com/book/4*",
+                        "https://www.goodreads.com/book/5*",
+                        "https://www.goodreads.com/book/6*",
+                        "https://www.goodreads.com/book/7*",
+                        "https://www.goodreads.com/book/8*",
+                        "https://www.goodreads.com/book/9*"
+                       ],
             "css": ["bookedit.css"],
             "js": ["bookedit.js"],
             "run_at": "document_idle"

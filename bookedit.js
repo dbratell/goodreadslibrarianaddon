@@ -137,6 +137,67 @@ function onSortTitleEdited() {
     sort_title_field.title = "";
 }
 
+function addRecentLanguage(select, language_code, insert_before) {
+    // Find the current option so we can use the same label.
+    const current_option = document.querySelector(
+        "option[value="+language_code+"]");
+    const label = current_option ? current_option.innerText : language_code;
+    const new_option = document.createElement("option");
+    new_option.setAttribute("value", language_code);
+    new_option.innerText = label + " --- (Recently used/LibTool)";
+    select.insertBefore(new_option, insert_before);
+}
+
+function getRecentLanguagesList() {
+    const recent_languages_string = window.localStorage.getItem("LibTool:RecentLanguages");
+    if (recent_languages_string) {
+        const recent_languages_list = recent_languages_string.split(",");
+        return recent_languages_list;
+    }
+    return [];
+}
+
+function addRecentLanguagesToTop() {
+    const recent_languages_list = getRecentLanguagesList();
+    let before = document.querySelector("option[value=eng]");
+    for (let language_code of recent_languages_list) {
+        addRecentLanguage(language_select, language_code, before);
+    }
+}
+
+function onLanguageChanging(event) {
+    this.libTool$HasChangedLanguage = true;
+    const selected_language_code = this.value;
+    const recent_languages_list = getRecentLanguagesList();
+    const new_recent_languages_list = [selected_language_code];
+    for (let i = 0; i < recent_languages_list.length && new_recent_languages_list.length < 3; i++) {
+        if (recent_languages_list[i] != selected_language_code) {
+            new_recent_languages_list.push(recent_languages_list[i]);
+        }
+    }
+
+    window.localStorage.setItem("LibTool:RecentLanguages",
+                                new_recent_languages_list.join());
+
+}
+
+function onLanguageChangeFinished(event) {
+    if (this.libTool$HasChangedLanguage) {
+        const selected_language_code = this.value;
+        const recent_languages_list = getRecentLanguagesList();
+        const new_recent_languages_list = [selected_language_code];
+        for (let i = 0; i < recent_languages_list.length && new_recent_languages_list.length < 3; i++) {
+            if (recent_languages_list[i] != selected_language_code) {
+                new_recent_languages_list.push(recent_languages_list[i]);
+            }
+        }
+
+        window.localStorage.setItem("LibTool:RecentLanguages",
+                                    new_recent_languages_list.join());
+        this.libTool$HasChangedLanguage = false;
+    }
+}
+
 if (isbn13_field) {
     checkIsbn13();
     isbn13_field.addEventListener("input", checkIsbn13);
@@ -154,4 +215,10 @@ if (title_field) {
 
 if (sort_title_field) {
     sort_title_field.addEventListener("input", onSortTitleEdited);
+}
+
+if (language_select) {
+    addRecentLanguagesToTop();
+    language_select.addEventListener("change", onLanguageChanging);
+    language_select.addEventListener("blur", onLanguageChangeFinished);
 }
