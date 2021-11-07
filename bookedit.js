@@ -206,7 +206,6 @@ function setAuthor(name_id, role_id, name_role) {
 
 function expandAuthorCommas() {
     const collectedAuthors = [];
-    const collectedAuthorsCheck = {}
     let phase = 0;
     let i = 0;
     let prevTr = null;
@@ -261,19 +260,22 @@ function expandAuthorCommas() {
             i += 1;
         }
 
-        if (name_role[0] && !(("" + name_role) in collectedAuthorsCheck)) {
-            collectedAuthorsCheck["" + name_role] = "seen";
+        if (name_role[0])
             collectedAuthors.push(name_role);
         }
     }
 
     const expanded_author_roles = [];
+    const expanded_authors_check = {};
     for (let name_role of collectedAuthors) {
         const name_with_commas = name_role[0];
         const role = name_role[1];
         const names = name_with_commas.split(",");
         for (let name of names) {
-            if (name.trim()) {
+            name = name.trim();
+            const key = "" + name + "," + role;
+            if (name && !(key in expanded_authors_check)) {
+                expanded_authors_check[key] = "seen";
                 expanded_author_roles.push([name.trim(), role]);
             }
         }
