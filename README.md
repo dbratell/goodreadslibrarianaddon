@@ -10,23 +10,31 @@ Features
 ===
 
 * Lets you write a comma separated list of authors and have them expanded
-  into author fields.
+  into author fields so that you don't have to to copy one name at a time.
 
-* Autogenerates "Sort by" from title
+* Autogenerates "Sort by" from title because it takes less time than
+  writing a sort by, even if you have to change one or two letters.
 
 * Expand the cover photo on the book edit page so you can check
   exactly what it says.
-* Highlights most recent book in the combination list
 
-* Warns about mismatch between ISBN10 ISBN13
+* Highlights most recent book in the combination list to make it
+  easier to find the edition to separate.
 
-* Warns for invalid ISBNs
+* Warns about mismatch between ISBN10 and ISBN13
 
-* Autogenerates ISBN13 from ISBN10
+* Warns about invalid ISBNs to cover when someone has put a truncated
+  ISBN13 in the ISBN10 field.
 
-* Auto-enable "keyword" when writing text in the combine search field
+* Autogenerates ISBN13 from ISBN10, to avoid cases where a edition ends
+  up with one ISBN13 instance and one ISBN10 instance.
 
-* Puts the three most recently used languages at the top of the language select.
+* Auto-enable "keyword" when writing text in the combine search field so
+  that the user doesn't have to redo the search after forgetting to do it.
+
+* Puts the three most recently used languages at the top of the
+  language select because if you work on a language specific group of
+  books, scrolling that dropdown takes too long.
 
 
 Installation
