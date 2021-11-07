@@ -24,7 +24,7 @@ if (search_field) {
 
 // Highlight the book we came from
 if (document.referrer) {
-    const book_number_regexp = /goodreads.com\/book\/show\/([0-9]+)[.-]/;
+    const book_number_regexp = /goodreads.com\/book\/(?:show|edit\/)?([0-9]+)[.-]?/;
     const match = book_number_regexp.exec(document.referrer);
     let number = null;
     if (match) {
