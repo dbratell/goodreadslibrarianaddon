@@ -249,7 +249,6 @@ function expandAuthorCommas() {
             }
             if (name_role === null) {
                 phase = 2;
-                i = 1;
                 continue;
             }
         } else {
@@ -257,12 +256,11 @@ function expandAuthorCommas() {
                                       "book_authors_book_author" + i + "_role");
             if (name_role === null)
                 break;
-            i += 1;
         }
 
         if (name_role[0])
             collectedAuthors.push(name_role);
-        }
+        i += 1;
     }
 
     const expanded_author_roles = [];
@@ -425,6 +423,7 @@ if (add_new_author_link) {
     // it whenever something gets focus.
     document.addEventListener("focusin", onSomethingFocus);
 }
+
 if (book_cover_img) {
     const cover_link = book_cover_img.parentNode;
     const cover_link_container = cover_link.parentNode;
