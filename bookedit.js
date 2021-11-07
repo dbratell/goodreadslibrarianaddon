@@ -10,6 +10,8 @@ const language_select = document.querySelector("select#book_language_code");
 
 const add_new_author_link = document.querySelector("a#addNewAuthor");
 
+const book_cover_img = document.querySelector("div.rightContainer a > img");
+
 function calculateIsbn10CheckDigit(isbn10) {
     let check_sum = 0;
     for (let i = 0; i < 9; i++) {
@@ -143,6 +145,16 @@ function onSortTitleEdited() {
     sort_title_field.classList.remove("autochanged");
     sort_title_field.title = "";
 }
+
+function enlargeImage() {
+    const current_image_src = book_cover_img.src;
+    // Large image source is the same without the ._SX98_ part.
+    const keep_parts = current_image_src.match(/^(.*)\._SX[0-9]+_(\.jpg)$/);
+    if (keep_parts) {
+        book_cover_img.src = keep_parts[1] + keep_parts[2];
+    }
+}
+
 
 function collectAuthor(name_id, role_id) {
     const name_field = document.querySelector("input#"+name_id);
@@ -397,4 +409,14 @@ if (add_new_author_link) {
     new_command.innerText = "Expand commas (LibTool)";
     container.appendChild(new_command);
     new_command.addEventListener("click", expandAuthorCommas);
+
+if (book_cover_img) {
+    const cover_link = book_cover_img.parentNode;
+    const cover_link_container = cover_link.parentNode;
+    const new_link = document.createElement("a");
+    new_link.setAttribute("href", "#");
+    new_link.innerText = "Enlarge image (LibTool)";
+    cover_link_container.insertBefore(new_link, cover_link);
+    cover_link_container.insertBefore(document.createElement("br"), cover_link);
+    new_link.addEventListener("click", enlargeImage);
 }

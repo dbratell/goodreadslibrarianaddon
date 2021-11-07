@@ -14,6 +14,8 @@ Features
 
 * Autogenerates "Sort by" from title
 
+* Expand the cover photo on the book edit page so you can check
+  exactly what it says.
 * Highlights most recent book in the combination list
 
 * Warns about mismatch between ISBN10 ISBN13
