@@ -315,6 +315,14 @@ function expandAuthorCommas() {
     }
 }
 
+function onSomethingFocus(event) {
+    // Default author fields have a limited length, 100 chars, which
+    // won't fit long comma separated lists.
+    if (event.target.type == "text" && event.target.name.match(".*author")) {
+        event.target.removeAttribute("maxlength");
+    }
+}
+
 function addRecentLanguage(select, language_code, insert_before) {
     // Find the current option so we can use the same label.
     const current_option = document.querySelector(
@@ -410,6 +418,11 @@ if (add_new_author_link) {
     container.appendChild(new_command);
     new_command.addEventListener("click", expandAuthorCommas);
 
+    // Make sure to remove the maxlength limit or the comma expansion
+    // will be hard to use. Since input fields can be added later, remove
+    // it whenever something gets focus.
+    document.addEventListener("focusin", onSomethingFocus);
+}
 if (book_cover_img) {
     const cover_link = book_cover_img.parentNode;
     const cover_link_container = cover_link.parentNode;
