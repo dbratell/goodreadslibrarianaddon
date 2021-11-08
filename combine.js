@@ -42,3 +42,20 @@ if (document.referrer) {
         }
     }
 }
+
+// Put work ids by work names
+const work_rows = document.querySelectorAll("form#combineForm table tbody tr");
+for (let work_row of work_rows) {
+    const work_id_match = work_row.id.match(/^clickable_row_([0-9]+)$/);
+    if (work_id_match) {
+        const work_id = work_id_match[1];
+        const work_title = document.querySelector(
+            "td#book_title_" + work_id + " > strong");
+        if (work_title) {
+            const work_id_string = document.createElement("i");
+            work_id_string.innerText = " (" + work_id + ")";
+            work_id_string.title = "The work ID is " + work_id;
+            work_title.after(work_id_string);
+        }
+    }
+}

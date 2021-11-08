@@ -21,6 +21,8 @@ Features
 * Highlights most recent book in the combination list to make it
   easier to find the edition to separate.
 
+* Shows the work id by each work on the combine page.
+
 * Warns about mismatch between ISBN10 and ISBN13
 
 * Warns about invalid ISBNs to cover when someone has put a truncated
