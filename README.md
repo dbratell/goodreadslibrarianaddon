@@ -15,7 +15,7 @@ Features
 * Autogenerates "Sort by" from title because it takes less time than
   writing a sort by, even if you have to change one or two letters.
 
-* Expand the cover photo on the book edit page so you can check
+* Expand the cover photo on the book edit page so that you can check
   exactly what it says.
 
 * Highlights most recent book in the combination list to make it
@@ -35,6 +35,9 @@ Features
 * Puts the three most recently used languages at the top of the
   language select because if you work on a language specific group of
   books, scrolling that dropdown takes too long.
+
+* Compacted the author edit page a bit to reduce the amount of
+  scrolling needed to get to the save button.
 
 
 Installation
