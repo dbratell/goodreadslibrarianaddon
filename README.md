@@ -49,3 +49,11 @@ To use in development mode, turn on "Developer Mode" on your extension page.
 Download/clone/checkout all files on your disk. "Load Unpacked" and it
 is running. Note that this bypasses all the controls Google does on
 extensions so only do this if you trust the code and its developers.
+
+Compatibility
+===
+
+The extension works with the current web version of Goodreads as of
+november 2021. A new version is coming and it is likely that some of
+the extension's functionality will disappear. Maybe the extension
+won't even be needed.
