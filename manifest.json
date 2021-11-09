@@ -5,7 +5,7 @@
     "description": "Simplifying typical librarian actions on Goodreads.",
     "author": "Daniel Bratell",
     "homepage_url": "https://github.com/dbratell/goodreadslibrarianaddon",
-    "version": "0.2",
+    "version": "0.3",
 
     "permissions": ["storage"],
     "icons": {
