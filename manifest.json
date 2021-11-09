@@ -1,13 +1,22 @@
 {
-    "name": "Goodreads Librarian Tools",
-    "description": "Simplifying and optimizing typical librarian actions on Goodreads.",
-    "version": "0.1",
     "manifest_version": 3,
+
+    "name": "Goodreads Librarian Tools",
+    "description": "Simplifying typical librarian actions on Goodreads.",
+    "author": "Daniel Bratell",
+    "homepage_url": "https://github.com/dbratell/goodreadslibrarianaddon",
+    "version": "0.2",
+
+    "permissions": ["storage"],
     "icons": {
         "16": "/images/icon16.png",
         "32": "/images/icon32.png",
         "48": "/images/icon48.png",
         "128": "/images/icon128.png"
+    },
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
     },
     "content_scripts": [
         {

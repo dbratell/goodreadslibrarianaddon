@@ -1,9 +1,81 @@
 <!DOCTYPE html>
 <html>
     <head><title>LibTool option</title>
+        <link rel="stylesheet" href="options.css">
     </head>
     <body>
-        <h1>Currently no options</h1>
+        <div id="loading">Loading settings...</div>
+        <div id="options"  style="display:none">
+            <h3>Book edit</h3>
+            <div class="option">
+                <input type="checkbox" checked id="assistsorttitle">
+                <label for="assistsorttitle">Assist with "sort title"</label>
+                <span class="status"></span>
+                <br>
+            </div>
+
+            <div class="option">
+                <input type="checkbox" checked id="enlargecoverlink">
+                <label for="enlargecoverlink">Button to enlarge covers on edit pages</label>
+                <span class="status"></span>
+                <br>
+            </div>
+
+            <div class="option">
+                <input type="checkbox" checked id="checkisbn">
+                <label for="checkisbn">Check ISBNs</label>
+                <span class="status"></span>
+                <br>
+            </div>
+
+            <div class="option">
+                <input type="checkbox" checked id="recentlanguages">
+                <label for="recentlanguages">Recent languages at top</label>
+                <span class="status"></span>
+                <br>
+            </div>
+
+            <div class="option">
+                <input type="checkbox" checked id="authorcommalist">
+                <label for="authorcommalist">Add "expand commas" to authors</label>
+                <span class="status"></span>
+                <br>
+            </div>
+
+
+            <h3>Combine page</h3>
+
+            <div class="option">
+                <input type="checkbox" checked id="workidoncombine">
+                <label for="workidoncombine">Show work IDs on the combine page</label>
+                <span class="status"></span>
+                <br>
+            </div>
+            <div class="option">
+                <input type="checkbox" checked id="autoselectkeyword">
+                <label for="autoselectkeyword">Select keyword mode if entering text</label>
+                <span class="status"></span>
+                <br>
+            </div>
+            <div class="option">
+                <input type="checkbox" checked id="highlightreferrerbook">
+                <label for="highlightreferrerbook">Highlight book from where combine was triggered</label>
+                <span class="status"></span>
+                <br>
+            </div>
+
+
+            <h3>Author edit</h3>
+
+            <div class="option">
+                <input type="checkbox" checked id="compactauthoredit">
+                <label for="compactauthoredit">Compact Author Edit page</label>
+                <span class="status"></span>
+                <br>
+            </div>
+
+            <button id="resetbutton">Reset to Defaults (all enabled)</button>
+        </div>
     </body>
     <script src="options.js"></script>
 </html>

@@ -1,10 +1,12 @@
 Chrome/Opera extension to simplify work for Librarians at Goodreads.
 
-The UI for book editing is at times not optimal and this extension does
-various things to make life as a librarian easier.
+The Goodreads UI is not always optimal for the tasks a Goodreads
+Librarian wants to perform so this extension tries to simplify some
+things.
 
 Born out of a feeling that things should be easier, and a lack of
-ability to fix the actual site.
+ability to fix the actual site. And a wish to spend less time on
+certain tasks.
 
 Features
 ===

@@ -1,0 +1,23 @@
+span.status {
+    color: green;
+    font-family: serif;
+    font-size: 80%;
+}
+
+span.status {
+    visibility: hidden;
+    opacity: 0%;
+    transition-duration: 1s;
+}
+span.status.show {
+    visibility: visible;
+    opacity: 100%;
+    font-size: 100%;
+    transition-duration:0.10s;
+}
+
+div.option { margin-top: 0.24em;}
+
+button#resetbutton { margin-top: 0.3em;}
+
+body {font-size: 16px; }

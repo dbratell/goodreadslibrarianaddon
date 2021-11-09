@@ -384,53 +384,68 @@ function onLanguageChangeFinished(event) {
     }
 }
 
-if (isbn13_field) {
-    checkIsbn13();
-    isbn13_field.addEventListener("input", checkIsbn13);
+function Init(options) {
+    if (!options.disable_checkisbn) {
+        if (isbn13_field) {
+            checkIsbn13();
+            isbn13_field.addEventListener("input", checkIsbn13);
+        }
+
+        if (isbn10_field) {
+            checkIsbn10();
+            isbn10_field.addEventListener("input", checkIsbn10);
+        }
+    }
+
+    if (!options.disable_assistsorttitle) {
+        if (title_field) {
+            onTitleEdited();
+            title_field.addEventListener("input", onTitleEdited);
+        }
+
+        if (sort_title_field) {
+            sort_title_field.addEventListener("input", onSortTitleEdited);
+        }
+    }
+
+    if (!options.disable_recentlanguages) {
+        if (language_select) {
+            addRecentLanguagesToTop();
+            language_select.addEventListener("change", onLanguageChanging);
+            language_select.addEventListener("blur", onLanguageChangeFinished);
+        }
+    }
+
+    if (!options.disable_authorcommalist) {
+        if (add_new_author_link) {
+            const container = add_new_author_link.parentNode;
+            container.appendChild(document.createTextNode(" - "));
+            const new_command = document.createElement("a");
+            new_command.href = "#";
+            new_command.innerText = "Expand commas (LibTool)";
+            container.appendChild(new_command);
+            new_command.addEventListener("click", expandAuthorCommas);
+
+            // Make sure to remove the maxlength limit or the comma expansion
+            // will be hard to use. Since input fields can be added later, remove
+            // it whenever something gets focus.
+            document.addEventListener("focusin", onSomethingFocus);
+        }
+    }
+
+    if (!options.disable_enlargecoverlink) {
+        if (book_cover_img) {
+            const cover_link = book_cover_img.parentNode;
+            const cover_link_container = cover_link.parentNode;
+            const new_link = document.createElement("a");
+            new_link.setAttribute("href", "#");
+            new_link.innerText = "Enlarge image (LibTool)";
+            cover_link_container.insertBefore(new_link, cover_link);
+            cover_link_container.insertBefore(document.createElement("br"), cover_link);
+            new_link.addEventListener("click", enlargeImage);
+        }
+    }
 }
 
-if (isbn10_field) {
-    checkIsbn10();
-    isbn10_field.addEventListener("input", checkIsbn10);
-}
-
-if (title_field) {
-    onTitleEdited();
-    title_field.addEventListener("input", onTitleEdited);
-}
-
-if (sort_title_field) {
-    sort_title_field.addEventListener("input", onSortTitleEdited);
-}
-
-if (language_select) {
-    addRecentLanguagesToTop();
-    language_select.addEventListener("change", onLanguageChanging);
-    language_select.addEventListener("blur", onLanguageChangeFinished);
-}
-
-if (add_new_author_link) {
-    const container = add_new_author_link.parentNode;
-    container.appendChild(document.createTextNode(" - "));
-    const new_command = document.createElement("a");
-    new_command.href = "#";
-    new_command.innerText = "Expand commas (LibTool)";
-    container.appendChild(new_command);
-    new_command.addEventListener("click", expandAuthorCommas);
-
-    // Make sure to remove the maxlength limit or the comma expansion
-    // will be hard to use. Since input fields can be added later, remove
-    // it whenever something gets focus.
-    document.addEventListener("focusin", onSomethingFocus);
-}
-
-if (book_cover_img) {
-    const cover_link = book_cover_img.parentNode;
-    const cover_link_container = cover_link.parentNode;
-    const new_link = document.createElement("a");
-    new_link.setAttribute("href", "#");
-    new_link.innerText = "Enlarge image (LibTool)";
-    cover_link_container.insertBefore(new_link, cover_link);
-    cover_link_container.insertBefore(document.createElement("br"), cover_link);
-    new_link.addEventListener("click", enlargeImage);
-}
+// Get all options and call Init with them.
+chrome.storage.sync.get(null, Init);
