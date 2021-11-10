@@ -14,7 +14,7 @@ Features
 * Lets you write a comma separated list of authors and have them expanded
   into author fields so that you don't have to to copy one name at a time.
 
-* Autogenerates "Sort by" from title because it takes less time than
+* Auto-generates "Sort by" from title because it takes less time than
   writing a sort by, even if you have to change one or two letters.
 
 * Expand the cover photo on the book edit page so that you can check
@@ -30,7 +30,7 @@ Features
 * Warns about invalid ISBNs to cover when someone has put a truncated
   ISBN13 in the ISBN10 field.
 
-* Autogenerates ISBN13 from ISBN10, to avoid cases where a edition ends
+* Auto-generates ISBN13 from ISBN10, to avoid cases where a edition ends
   up with one ISBN13 instance and one ISBN10 instance.
 
 * Auto-enable "keyword" when writing text in the combine search field so
@@ -40,7 +40,7 @@ Features
   language select because if you work on a language specific group of
   books, scrolling that dropdown takes too long.
 
-* Compacted the author edit page a bit to reduce the amount of
+* Compacts the author edit page a bit to reduce the amount of
   scrolling needed to get to the save button.
 
 
@@ -58,6 +58,6 @@ Compatibility
 ===
 
 The extension works with the current web version of Goodreads as of
-november 2021. A new version is coming and it is likely that some of
+November 2021. A new version is coming and it is likely that some of
 the extension's functionality will disappear. Maybe the extension
 won't even be needed.
