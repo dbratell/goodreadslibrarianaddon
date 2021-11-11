@@ -46,15 +46,24 @@ Features
 
 Installation
 ===
-The extension has not yet been uploaded to Chrome Web Store so it can
-only be used in development mode.
+The extension is published 
+[in the Chrome Web Store](https://chrome.google.com/webstore/detail/goodreads-librarian-tools/pdfajdihdnkfpfhnpnjlipejcfojdfbm), and from there it can be installed in Opera,
+Chrome and other Chromium based browsers.
 
-To use in development mode, turn on "Developer Mode" on your extension page.
-Download/clone/checkout all files on your disk. "Load Unpacked" and it
-is running. Note that this bypasses all the controls Google does on
+The extension scripts are also compatible with Firefox but has not (yet) been packaged
+and uploaded there.
+
+To use the very latest version from github, it needs to be installed in 
+"development mode". To use in development mode:
+
+* Turn on "Developer Mode" on your extension page.
+* Download/clone/checkout all files on your disk. 
+* "Load Unpacked" on the extension page.
+
+Note that running in developer mode bypasses all the controls Google does on
 extensions so only do this if you trust the code and its developers.
 
-Compatibility
+Compatibility with Goodreads
 ===
 
 The extension works with the current web version of Goodreads as of
