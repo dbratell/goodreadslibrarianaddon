@@ -60,7 +60,7 @@ function addWorkIdsToBooks() {
     }
 }
 
-function Init(options) {
+function init(options) {
     if (!options.disable_autoselectkeyword) {
         if (search_field) {
             onSearchInput.apply(search_field); // In case it was pre-filled.
@@ -76,4 +76,4 @@ function Init(options) {
 }
 
 // Get all options and call Init with them.
-chrome.storage.sync.get(null, Init);
+chrome.storage.sync.get(null, init);

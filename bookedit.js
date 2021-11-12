@@ -384,7 +384,7 @@ function onLanguageChangeFinished(event) {
     }
 }
 
-function Init(options) {
+function init(options) {
     if (!options.disable_checkisbn) {
         if (isbn13_field) {
             checkIsbn13();
@@ -448,4 +448,4 @@ function Init(options) {
 }
 
 // Get all options and call Init with them.
-chrome.storage.sync.get(null, Init);
+chrome.storage.sync.get(null, init);

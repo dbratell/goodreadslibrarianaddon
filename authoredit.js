@@ -27,11 +27,11 @@ function compactGenreDisplay() {
     }
 }
 
-function Init(options) {
+function init(options) {
     if (!options.disable_compactauthoredit) {
         compactGenreDisplay();
     }
 }
 
 // Get all options and call Init with them.
-chrome.storage.sync.get(null, Init);
+chrome.storage.sync.get(null, init);
