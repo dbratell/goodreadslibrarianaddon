@@ -14,16 +14,24 @@ Features
 * Lets you write a comma separated list of authors and have them expanded
   into author fields so that you don't have to to copy one name at a time.
 
+* **improved in the next release** Adds three small quick-links to choose a
+  recently used language in the book edit page.
+
 * Auto-generates "Sort by" from title because it takes less time than
   writing a sort by, even if you have to change one or two letters.
 
 * Expand the cover photo on the book edit page so that you can check
   exactly what it says.
 
+* Shows the work id by each work on the combine page.
+
+* Auto-enable "keyword" when writing text in the combine search field so
+  that the user doesn't have to redo the search after forgetting to do it.
+
+* **new in the next release** Shows how many works are being combined to avoid accidents. 
+
 * Highlights most recent book in the combination list to make it
   easier to find the edition to separate.
-
-* Shows the work id by each work on the combine page.
 
 * Warns about mismatch between ISBN10 and ISBN13
 
@@ -32,13 +40,6 @@ Features
 
 * Auto-generates ISBN13 from ISBN10, to avoid cases where a edition ends
   up with one ISBN13 instance and one ISBN10 instance.
-
-* Auto-enable "keyword" when writing text in the combine search field so
-  that the user doesn't have to redo the search after forgetting to do it.
-
-* Puts the three most recently used languages at the top of the
-  language select because if you work on a language specific group of
-  books, scrolling that dropdown takes too long.
 
 * Compacts the author edit page a bit to reduce the amount of
   scrolling needed to get to the save button.

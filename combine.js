@@ -3,6 +3,7 @@
 const search_field = document.querySelector("input[name=value]");
 const radio_search = document.getElementById("filter_search");
 const radio_work = document.getElementById("filter_work");
+const combine_form = document.getElementById("combineForm");
 
 function onSearchInput(event) {
     if (this.value && !this.value.match(/^[0-9,]*$/)) {
@@ -60,6 +61,34 @@ function addWorkIdsToBooks() {
     }
 }
 
+function countCombines(event) {
+    let count = 0;
+    for (let i = 0; i < combine_form.length; i++) {
+        const input = combine_form[i];
+        if (input.id.startsWith("book_") && input.type == "checkbox" && input.checked)
+            count++;
+    }
+
+    for (let i = 0; i < combine_form.length; i++) {
+        const input = combine_form[i];
+        if (input.name == "commit" && input.type == "submit") {
+            input.value = "Combine (" + count + ") Editions";
+            input.disabled = count < 2;
+        }
+    }
+}
+
+function setupCombineCounting() {
+    if (combine_form) {
+        countCombines();
+        combine_form.addEventListener("change", countCombines);
+        // We have to listen to "click" because there is script that
+        // checks boxes when you click some text. They could have used
+        // <label for=...> but they didn't.
+        combine_form.addEventListener("click", countCombines);
+    }
+}
+
 function init(options) {
     if (!options.disable_autoselectkeyword) {
         if (search_field) {
@@ -73,6 +102,9 @@ function init(options) {
 
     if (!options.disable_workidoncombine)
         addWorkIdsToBooks();
+
+    if (!options.disable_countcombines)
+        setupCombineCounting();
 }
 
 // Get all options and call Init with them.
