@@ -346,30 +346,25 @@ function getRecentLanguagesList() {
 function addRecentLanguagesToTop() {
     const recent_languages_list = getRecentLanguagesList();
     let before = document.querySelector("option[value=eng]");
-    for (let language_code of recent_languages_list) {
-        addRecentLanguage(language_select, language_code, before);
+    if (before) {
+        for (let language_code of recent_languages_list) {
+            if (language_code) {
+                addRecentLanguage(language_select, language_code, before);
+            }
+        }
+    } else {
+        console.logWarning("LibTool: Failed to add recent languages - could not find the right location.")
     }
 }
 
 function onLanguageChanging(event) {
     this.libTool$HasChangedLanguage = true;
-    const selected_language_code = this.value;
-    const recent_languages_list = getRecentLanguagesList();
-    const new_recent_languages_list = [selected_language_code];
-    for (let i = 0; i < recent_languages_list.length && new_recent_languages_list.length < 3; i++) {
-        if (recent_languages_list[i] != selected_language_code) {
-            new_recent_languages_list.push(recent_languages_list[i]);
-        }
-    }
-
-    window.localStorage.setItem("LibTool:RecentLanguages",
-                                new_recent_languages_list.join());
-
 }
 
 function onLanguageChangeFinished(event) {
     if (this.libTool$HasChangedLanguage) {
         const selected_language_code = this.value;
+        if (selected_language_code) {
         const recent_languages_list = getRecentLanguagesList();
         const new_recent_languages_list = [selected_language_code];
         for (let i = 0; i < recent_languages_list.length && new_recent_languages_list.length < 3; i++) {
@@ -381,6 +376,26 @@ function onLanguageChangeFinished(event) {
         window.localStorage.setItem("LibTool:RecentLanguages",
                                     new_recent_languages_list.join());
         this.libTool$HasChangedLanguage = false;
+    }
+    }
+}
+
+function onBookEditSubmitted(event) {
+    if (language_select && language_select.libTool$HasChangedLanguage) {
+        const selected_language_code = language_select.value;
+        if (selected_language_code) {
+            const recent_languages_list = getRecentLanguagesList();
+            const new_recent_languages_list = [selected_language_code];
+            for (let i = 0; i < recent_languages_list.length && new_recent_languages_list.length < 3; i++) {
+                if (recent_languages_list[i] != selected_language_code) {
+                    new_recent_languages_list.push(recent_languages_list[i]);
+                }
+            }
+
+            window.localStorage.setItem("LibTool:RecentLanguages",
+                                        new_recent_languages_list.join());
+            language_select.libTool$HasChangedLanguage = false;
+        }
     }
 }
 
@@ -412,7 +427,7 @@ function init(options) {
         if (language_select) {
             addRecentLanguagesToTop();
             language_select.addEventListener("change", onLanguageChanging);
-            language_select.addEventListener("blur", onLanguageChangeFinished);
+            language_select.form.addEventListener("submit", onBookEditSubmitted);
         }
     }
 
