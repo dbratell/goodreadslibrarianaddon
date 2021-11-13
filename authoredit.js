@@ -17,9 +17,7 @@ function compactGenreDisplay() {
                     genre_container.id == "author_genre" + i + "_container") {
                     // Move the label
                     const first_current_child = genre_container.firstChild;
-                    const spacer = document.createTextNode(": ");
-                    genre_container.insertBefore(spacer, first_current_child);
-                    genre_container.insertBefore(label, spacer)
+                    first_current_child.before(label, ": ");
                     parent_p.remove();
                 }
             }

@@ -346,8 +346,8 @@ function addRecentlyUsedLanguages() {
     const br = document.createElement("br");
     previous_element.after(br);
     previous_element = br;
-        for (let language_code of recent_languages_list) {
-            if (language_code) {
+    for (let language_code of recent_languages_list) {
+        if (language_code) {
             const language_link = document.createElement("span");
             language_link.classList.add("libtool-command");
             language_link.classList.add("libtool-language-link");
@@ -356,9 +356,9 @@ function addRecentlyUsedLanguages() {
             language_link.addEventListener("click", onClickLanguage);
             previous_element.after(language_link);
             previous_element = language_link;
-            }
         }
     }
+}
 function onClickLanguage(event) {
     const language_code = this.getAttribute("data-language-code");
     language_select.value = language_code;
@@ -424,12 +424,10 @@ function init(options) {
 
     if (!options.disable_authorcommalist) {
         if (add_new_author_link) {
-            const container = add_new_author_link.parentNode;
-            container.appendChild(document.createTextNode(" - "));
             const new_command = document.createElement("a");
             new_command.href = "#";
             new_command.innerText = "Expand commas (LibTool)";
-            container.appendChild(new_command);
+            add_new_author_link.after(" - ", new_command);
             new_command.addEventListener("click", expandAuthorCommas);
 
             // Make sure to remove the maxlength limit or the comma expansion
@@ -442,12 +440,10 @@ function init(options) {
     if (!options.disable_enlargecoverlink) {
         if (book_cover_img) {
             const cover_link = book_cover_img.parentNode;
-            const cover_link_container = cover_link.parentNode;
-            const new_link = document.createElement("a");
-            new_link.setAttribute("href", "#");
+            const new_link = document.createElement("span");
+            new_link.classList.add("libtool-command");
             new_link.innerText = "Enlarge image (LibTool)";
-            cover_link_container.insertBefore(new_link, cover_link);
-            cover_link_container.insertBefore(document.createElement("br"), cover_link);
+            cover_link.before(new_link, document.createElement("br"));
             new_link.addEventListener("click", enlargeImage);
         }
     }
