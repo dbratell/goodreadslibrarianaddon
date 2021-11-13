@@ -323,17 +323,6 @@ function onSomethingFocus(event) {
     }
 }
 
-function addRecentLanguage(select, language_code, insert_before) {
-    // Find the current option so we can use the same label.
-    const current_option = document.querySelector(
-        "option[value="+language_code+"]");
-    const label = current_option ? current_option.innerText : language_code;
-    const new_option = document.createElement("option");
-    new_option.setAttribute("value", language_code);
-    new_option.innerText = label + " --- (Recently used/LibTool)";
-    select.insertBefore(new_option, insert_before);
-}
-
 function getRecentLanguagesList() {
     const recent_languages_string = window.localStorage.getItem("LibTool:RecentLanguages");
     if (recent_languages_string) {
@@ -343,41 +332,43 @@ function getRecentLanguagesList() {
     return [];
 }
 
-function addRecentLanguagesToTop() {
+function getLanguageLabel(language_code) {
+    // Find the current option so we can use the same label.
+    const option = document.querySelector(
+        "option[value="+language_code+"]");
+    const label = option ? option.innerText : language_code;
+    return label;
+}
+
+function addRecentlyUsedLanguages() {
     const recent_languages_list = getRecentLanguagesList();
-    let before = document.querySelector("option[value=eng]");
-    if (before) {
+    let previous_element = language_select;
+    const br = document.createElement("br");
+    previous_element.after(br);
+    previous_element = br;
         for (let language_code of recent_languages_list) {
             if (language_code) {
-                addRecentLanguage(language_select, language_code, before);
+            const language_link = document.createElement("span");
+            language_link.classList.add("libtool-command");
+            language_link.classList.add("libtool-language-link");
+            language_link.setAttribute("data-language-code", language_code);
+            language_link.innerText = " → " + getLanguageLabel(language_code) + " ";
+            language_link.addEventListener("click", onClickLanguage);
+            previous_element.after(language_link);
+            previous_element = language_link;
             }
         }
-    } else {
-        console.logWarning("LibTool: Failed to add recent languages - could not find the right location.")
     }
+function onClickLanguage(event) {
+    const language_code = this.getAttribute("data-language-code");
+    language_select.value = language_code;
+    language_select.dispatchEvent(new UIEvent("input"));
+    language_select.dispatchEvent(new UIEvent("change"));
 }
 
-function onLanguageChanging(event) {
+
+function onLanguageChanged(event) {
     this.libTool$HasChangedLanguage = true;
-}
-
-function onLanguageChangeFinished(event) {
-    if (this.libTool$HasChangedLanguage) {
-        const selected_language_code = this.value;
-        if (selected_language_code) {
-        const recent_languages_list = getRecentLanguagesList();
-        const new_recent_languages_list = [selected_language_code];
-        for (let i = 0; i < recent_languages_list.length && new_recent_languages_list.length < 3; i++) {
-            if (recent_languages_list[i] != selected_language_code) {
-                new_recent_languages_list.push(recent_languages_list[i]);
-            }
-        }
-
-        window.localStorage.setItem("LibTool:RecentLanguages",
-                                    new_recent_languages_list.join());
-        this.libTool$HasChangedLanguage = false;
-    }
-    }
 }
 
 function onBookEditSubmitted(event) {
@@ -425,8 +416,8 @@ function init(options) {
 
     if (!options.disable_recentlanguages) {
         if (language_select) {
-            addRecentLanguagesToTop();
-            language_select.addEventListener("change", onLanguageChanging);
+            addRecentlyUsedLanguages();
+            language_select.addEventListener("change", onLanguageChanged);
             language_select.form.addEventListener("submit", onBookEditSubmitted);
         }
     }

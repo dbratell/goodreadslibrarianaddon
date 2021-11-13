@@ -9,3 +9,13 @@ input.updated {
 input.autochanged {
     color: green !important;
 }
+
+span.libtool-command {
+    color: green !important;
+    cursor: pointer;
+}
+
+span.libtool-language-link {
+    font-size: 75%;
+    margin-right: 1.7em;
+}
