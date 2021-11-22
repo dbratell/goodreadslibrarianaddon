@@ -11,6 +11,7 @@ const language_select = document.querySelector("select#book_language_code");
 const add_new_author_link = document.querySelector("a#addNewAuthor");
 
 const book_cover_img = document.querySelector("div.rightContainer a > img");
+const all_editions_link = document.querySelector("div.rightContainer a[href^='/work/editions/']");
 
 function calculateIsbn10CheckDigit(isbn10) {
     let check_sum = 0;
@@ -390,6 +391,49 @@ function onBookEditSubmitted(event) {
     }
 }
 
+function onSeparateLinkClicked() {
+    const form = document.getElementById("LibTool-separateform");
+    if (form) // Ask for confirmation?
+        form.submit();
+}
+
+function addSeparateLink() {
+    // Matching both 
+    //     /book/edit/12345-a-book-title
+    // and
+    //     /book/12345
+    const book_id_match = document.location.pathname.match(/\/([0-9]+.*)$/);
+    if (book_id_match) {
+        const book_id = book_id_match[1];
+
+        // Needs to be a POST so making a form for it.
+        const separate_form = document.createElement("form");
+        separate_form.id = "LibTool-separateform";
+        separate_form.method = "POST";
+        separate_form.action = "/book/separate/" + book_id;
+        if (false) {
+        const submit_button = document.createElement("input");
+        submit_button.type = "submit";
+        submit_button.value = "Separate from work";
+        separate_form.append(submit_button);
+        } else {
+            const submit_link = document.createElement("span");
+            submit_link.classList.add("libtool-command");
+            submit_link.innerText = "Separate from work (LibTool)";
+            submit_link.addEventListener("click", onSeparateLinkClicked);
+            const method_field = document.forms.bookForm._method.cloneNode();
+            method_field.value = "post";
+            separate_form.append(
+                method_field,
+                document.forms.bookForm.authenticity_token.cloneNode(),
+                submit_link);
+        }
+
+        const br = document.createElement("br");
+        all_editions_link.after(br, separate_form);
+    }
+}
+
 function init(options) {
     if (!options.disable_checkisbn) {
         if (isbn13_field) {
@@ -445,6 +489,12 @@ function init(options) {
             new_link.innerText = "Enlarge image (LibTool)";
             cover_link.before(new_link, document.createElement("br"));
             new_link.addEventListener("click", enlargeImage);
+        }
+    }
+
+    if (!options.disable_bookeditseparate) {
+        if (all_editions_link) {
+            addSeparateLink();
         }
     }
 }
